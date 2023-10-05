@@ -2,6 +2,8 @@ This template is an example 1.8.9 forge mod written in Kotlin that builds upon
 nea's [template](https://github.com/romangraef/Forge1.8.9Template/tree/kotlin).
 It is written with the intent to show how easy it is to work with MoulConfig and other tools.
 It is written by SkyHanni developers.
+![image](https://github.com/hannibal002/Example-1.8.9-Mod/assets/24389977/330485e3-f87b-4d29-8fc6-76abb23dc453)
+
 Here is the rest of the original readme from nea:
 
 
