@@ -1,4 +1,11 @@
- Architectury Loom based template for 1.8.9 kotlin forge mods
+This template is an example 1.8.9 forge mod written in Kotlin that builds upon
+nea's [template](https://github.com/romangraef/Forge1.8.9Template/tree/kotlin).
+It is written with the intent to show how easy it is to work with MoulConfig and other tools.
+It is written by SkyHanni developers.
+Here is the rest of the original readme from nea:
+
+
+Architectury Loom based template for 1.8.9 kotlin forge mods
 
 **For other templates, do check out the [other branches of this repository](https://github.com/romangraef/Forge1.8.9Template/branches/all)**
 
