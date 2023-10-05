@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
-@Mod(modid = "examplemod", useMetadata = true)
+@Mod(modid = ExampleMod.MOD_ID, useMetadata = true)
 class ExampleMod {
 
     @Mod.EventHandler
@@ -28,7 +28,7 @@ class ExampleMod {
 
     companion object {
         lateinit var configManager: ConfigManager
-        private const val MOD_ID = "examplemod"
+        const val MOD_ID = "examplemod"
 
         @JvmStatic
         val version: String
