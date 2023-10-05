@@ -56,13 +56,30 @@ sourceSets.main {
 
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://repo.spongepowered.org/maven/")
     // If you don't want to log in with your real minecraft account, remove this line
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
+    maven("https://jitpack.io") {
+        content {
+            includeGroupByRegex("com\\.github\\..*")
+        }
+    }
+    maven("https://repo.nea.moe/releases")
+    maven("https://maven.notenoughupdates.org/releases")
 }
 
 val shadowImpl: Configuration by configurations.creating {
     configurations.implementation.get().extendsFrom(this)
+}
+
+val shadowModImpl by configurations.creating {
+    configurations.modImplementation.get().extendsFrom(this)
+}
+
+val devenvMod by configurations.creating {
+    isTransitive = false
+    isVisible = false
 }
 
 dependencies {
@@ -78,8 +95,19 @@ dependencies {
     }
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT")
 
+    implementation(kotlin("stdlib-jdk8"))
+    shadowImpl("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3") {
+        exclude(group = "org.jetbrains.kotlin")
+    }
+
     // If you don't want to log in with your real minecraft account, remove this line
-    runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
+    modRuntimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
+
+    shadowModImpl(libs.moulconfig)
+    devenvMod(variantOf(libs.moulconfig) { classifier("test") })
+//
+    shadowImpl(libs.libautoupdate)
+    shadowImpl("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
 
 }
 
