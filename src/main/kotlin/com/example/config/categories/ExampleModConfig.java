@@ -20,4 +20,8 @@ public class ExampleModConfig extends Config {
     @Expose
     @Category(name = "First Category", desc = "This is the first category.")
     public FirstCategory firstCategory = new FirstCategory();
+
+    @Expose
+    @Category(name = "Second Category", desc = "This is another category.")
+    public SecondCategory secondCategory = new SecondCategory();
 }

@@ -50,7 +50,7 @@ class ConfigManager {
 
     private var configDirectory = File("config/skyhanni")
     private var configFile: File
-    private var config: ExampleModConfig? = null
+    var config: ExampleModConfig? = null
     private var lastSaveTime = 0L
 
     private lateinit var processor: MoulConfigProcessor<ExampleModConfig>
