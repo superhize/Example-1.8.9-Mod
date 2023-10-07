@@ -48,7 +48,7 @@ class ConfigManager {
             .create()
     }
 
-    private var configDirectory = File("config/skyhanni")
+    private var configDirectory = File("config/examplemod")
     private var configFile: File
     var config: ExampleModConfig? = null
     private var lastSaveTime = 0L
@@ -114,7 +114,6 @@ class ConfigManager {
             val unit = configDirectory.resolve("config.json.write")
             unit.createNewFile()
             BufferedWriter(OutputStreamWriter(FileOutputStream(unit), StandardCharsets.UTF_8)).use { writer ->
-                // TODO remove old "hidden" area
                 writer.write(gson.toJson(config))
             }
             // Perform move — which is atomic, unlike writing — after writing is done.
