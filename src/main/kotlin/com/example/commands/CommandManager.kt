@@ -16,6 +16,31 @@ class CommandManager {
         registerCommand("openconfig") {
             ExampleMod.configManager.openConfigGui()
         }
+        registerCommand("formatmessage") { args ->
+            val colorName = args.firstOrNull()
+            if (colorName == null) {
+                ChatUtils.messageToChat("Error: Invalid usage: /formatmessage <color> <message>")
+            }
+            val colorCode = when (colorName) {
+                "red" -> "§c"
+                "blue" -> "§9"
+                "green" -> "§a"
+                "yellow" -> "§e"
+                "pink" -> "§d"
+                else -> {
+                    ChatUtils.messageToChat("Error: Invalid color '$colorName'!")
+                    return@registerCommand
+                }
+            }
+
+            val rest = args.drop(1)
+            if (rest.isEmpty()) {
+                ChatUtils.messageToChat("Error: Message can not be empty!")
+                return@registerCommand
+            }
+
+            ChatUtils.messageToChat(colorCode + rest.joinToString(" "))
+        }
     }
 
     private fun registerCommand(name: String, function: (Array<String>) -> Unit) {
