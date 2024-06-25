@@ -9,13 +9,10 @@ plugins {
     kotlin("jvm") version "1.9.0"
 }
 
-//Constants:
+// Constants:
 
-val baseGroup: String by project
-val mcVersion: String by project
-val version: String by project
-val mixinGroup = "$baseGroup.mixin"
-val modid: String by project
+group = "be.hize.afknotifier"
+version = "1.0"
 
 // Toolchains:
 java {
@@ -66,12 +63,6 @@ dependencies {
         exclude(group = "org.jetbrains.kotlin")
     }
 
-    // If you don't want mixins, remove these lines
-    shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
-        isTransitive = false
-    }
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT")
-
     // If you don't want to log in with your real minecraft account, remove this line
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.1.2")
 
@@ -80,29 +71,21 @@ dependencies {
 
     shadowImpl(libs.libautoupdate)
     shadowImpl("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.3")
 }
 
 // Minecraft configuration:
 loom {
     launchConfigs {
         "client" {
-            // If you don't want mixins, remove these lines
-            property("mixin.debug", "true")
-            property("asmhelper.verbose", "true")
-            arg("--tweakClass", "org.spongepowered.asm.launch.MixinTweaker")
-
             arg("--mods", devenvMod.resolve().joinToString(",") { it.relativeTo(file("run")).path })
         }
     }
     forge {
-        pack200Provider.set(dev.architectury.pack200.java.Pack200Adapter())
-        // If you don't want mixins, remove this lines
-        mixinConfig("mixins.$modid.json")
-    }
-    // If you don't want mixins, remove these lines
-    @Suppress("UnstableApiUsage")
-    mixin {
-        defaultRefmapName.set("mixins.$modid.refmap.json")
+        pack200Provider.set(
+            dev.architectury.pack200.java
+                .Pack200Adapter(),
+        )
     }
 }
 
@@ -126,31 +109,21 @@ tasks.withType(JavaCompile::class) {
 }
 
 tasks.withType(Jar::class) {
-    archiveBaseName.set(modid)
+    archiveBaseName.set("AFKNotifier")
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     manifest.attributes.run {
         this["FMLCorePluginContainsFMLMod"] = "true"
         this["ForceLoadAsMod"] = "true"
-
-        // If you don't want mixins, remove these lines
-        this["TweakClass"] = "org.spongepowered.asm.launch.MixinTweaker"
-        this["MixinConfigs"] = "mixins.$modid.json"
     }
 }
 
 tasks.processResources {
     inputs.property("version", project.version)
-    inputs.property("mcversion", mcVersion)
-    inputs.property("modid", modid)
-    inputs.property("mixinGroup", mixinGroup)
-
-    filesMatching(listOf("mcmod.info", "mixins.$modid.json")) {
-        expand(inputs.properties)
-    }
+    inputs.property("mcversion", "1.8.9")
+    inputs.property("modid", "AFKNotifier")
 
     rename("(.+_at.cfg)", "META-INF/$1")
 }
-
 
 val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
     archiveClassifier.set("")
@@ -175,8 +148,8 @@ tasks.shadowJar {
     exclude("META-INF/versions/**")
 
     // If you want to include other dependencies and shadow them, you can relocate them in here
-    relocate("io.github.moulberry.moulconfig", "$baseGroup.deps.moulconfig")
-    relocate("moe.nea.libautoupdate", "$baseGroup.deps.libautoupdate")
+    relocate("io.github.moulberry.moulconfig", "be.hize.afknotifier.deps.moulconfig")
+    relocate("moe.nea.libautoupdate", "be.hize.afknotifier.deps.libautoupdate")
 }
 
 tasks.jar {
